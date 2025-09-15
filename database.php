@@ -2,7 +2,7 @@
 $host = 'localhost';
 $dbname = 'insecure_app_db';
 $username = 'php_user';
-$password = 'P@ssword123!'; // The password you set in the SQL commands
+$password = 'password123'; // The password you set in the SQL commands
 
 try {
     // Establish the connection to MySQL
