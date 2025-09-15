@@ -1,16 +1,24 @@
 <img width="809" height="868" alt="Screenshot 2025-09-15 114024" src="https://github.com/user-attachments/assets/695515d3-8a46-4e7c-a0bd-d23d01c999e5" />
+
+
 # insecure_webapp
 
 This project is for cybersecurity and educational purposes where intentional mistakes are made in order to be exploited 
 
+
 Virtual Machine Details:
+
+
 Host: Proxmox VE
 OS: Ubuntu-25.04.live-server-amd64
 Cores: 4
 RAM: 4096
 QEMU agent: Yes
 
+
 LAMP Install:
+
+
 1. sudo apt update 
 2. sudo apt upgrade -y
 3. sudo apt install apache2
@@ -38,8 +46,12 @@ Database creation:
 
 8. EXIT;
 
+
 Apache Permissions:
+
+
 sudo chown -R www-data:www-data /var/www/html/insecure_webapp
+
 sudo chmod -R 775 /var/www/html/insecure_webapp
 
 
