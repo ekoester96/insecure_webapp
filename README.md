@@ -37,3 +37,8 @@ Database creation:
 
 8. EXIT;
 
+Apache Permissions:
+sudo chown -R www-data:www-data /var/www/html/insecure_webapp
+sudo chmod -R 775 /var/www/html/insecure_webapp
+
+
