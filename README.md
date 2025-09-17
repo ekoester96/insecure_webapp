@@ -4,6 +4,7 @@
 # insecure_webapp
 
 This project is for cybersecurity and educational purposes where intentional mistakes are made in order to be exploited 
+https://docs.google.com/document/d/1-n4gv-DzNCoz3LsUp1bWw2W47BVQsMbtibpdAnkSl8I/edit?usp=sharing
 
 
 Virtual Machine Details:
