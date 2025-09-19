@@ -19,42 +19,117 @@ RAM: 4096
 QEMU agent: Yes
 
 
-LAMP Install:
+## LAMP Install:
 
+Update Repositories and install
 
-1. sudo apt update 
-2. sudo apt upgrade -y
-3. sudo apt install apache2
-4. sudo apt install mysql-server
-5. sudo apt install php libapache2-mod-php php-mysql
+	sudo apt update 
+	sudo apt upgrade -y
 
-Database creation:
-1. sudo mysql
-	
-2. CREATE DATABASE insecure_app_db;
+ Install Apache
+ 
+	sudo apt install apache2
 
-3. USE insecure_app_db;
+ install MYSQL
+ 
+	sudo apt install mysql-server
 
-4. CREATE TABLE users (
+ Install PHP
+ 
+	sudo apt install php libapache2-mod-php php-mysql
+
+## Database creation:
+
+	sudo mysql
+
+Create DB for insecure_app
+
+	CREATE DATABASE insecure_app_db;
+
+Use Database
+
+	USE insecure_app_db;
+
+Create users table
+
+	CREATE TABLE users (
   	     id INT AUTO_INCREMENT PRIMARY KEY,
   	     username VARCHAR(100) NOT NULL UNIQUE,
      password VARCHAR(255) NOT NULL
-   );
+   	);
 
-5. CREATE USER 'php_user'@'localhost' IDENTIFIED BY 'password123';
+Create database user with weak credentials
 
-6. GRANT ALL PRIVILEGES ON insecure_app_db.* TO 'php_user'@'localhost';
+	CREATE USER 'php_user'@'localhost' IDENTIFIED BY 'password123';
 
-7. FLUSH PRIVILEGES;
+Grant all privileges to user (Do Not Do This in a real production environment
 
-8. EXIT;
+	GRANT ALL PRIVILEGES ON insecure_app_db.* TO 'php_user'@'localhost';
+
+Apply Privileges
+
+	FLUSH PRIVILEGES;
+
+Exit MYSQL
+
+	EXIT;
 
 
-Apache Permissions:
+## Apache Permissions:
 
 
-sudo chown -R www-data:www-data /var/www/html/insecure_webapp
+	sudo chown -R www-data:www-data /var/www/html/insecure_webapp
 
-sudo chmod -R 775 /var/www/html/insecure_webapp
+	sudo chmod -R 775 /var/www/html/insecure_webapp
+
+## Modsecurity setup
+
+Install modsecurity2
+
+	sudo apt install libapache2-mod-security2 -y
+
+ Enable Modsecurity2
+
+	sudo a2enmod security2
+
+ Copy config file
+
+	sudo cp /etc/modsecurity/modsecurity.conf-recommended /etc/modsecurity/modsecurity.conf
+
+ Change SecRuleEngine to On
+
+	if grep -q "SecRuleEngine" /etc/modsecurity/modsecurity.conf; then
+
+   		sudo sed -i 's/^\s*SecRuleEngine\s\+DetectionOnly/SecRuleEngine On/' /etc/modsecurity/modsecurity.conf
+    	echo "SecRuleEngine updated to On."
+	
+	else
+
+    	echo "SecRuleEngine directive not found in modsecurity.conf"
+	
+	fi
+
+## OWASP CoreRuleSet config
+
+Install git and clone the repo
+
+	sudo apt install git -y
+
+	sudo git clone https://github.com/coreruleset/coreruleset.git /etc/modsecurity/coreruleset
+
+ config file setup
+
+ 	cd /etc/modsecurity/coreruleset
+  
+	sudo cp crs-setup.conf.example crs-setup.conf
+
+
+check for syntax errors in config files
+
+	sudo apache2ctl -t
+
+restart apache
+
+	sudo systemctl restart apache2
 
 
