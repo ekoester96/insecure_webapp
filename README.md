@@ -132,4 +132,8 @@ restart apache
 
 	sudo systemctl restart apache2
 
+Python spam filter
+	
+	sudo apt update && sudo apt install python3-pandas python3-sklearn python3-joblib
+
 
